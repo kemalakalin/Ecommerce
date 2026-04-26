@@ -1,17 +1,14 @@
 function HeroSection() {
   return (
     <section className="px-4 md:px-12 mt-6">
-      <div className="relative overflow-hidden rounded-2xl min-h-[520px] bg-gradient-to-r from-[#8BDEEF] to-[#B7EFCB] flex items-center">
+      {/* flex-col: Mobilde alt alta, md:flex-row: Masaüstünde yan yana */}
+      <div className="relative overflow-hidden rounded-2xl min-h-[520px] bg-gradient-to-r from-[#8BDEEF] to-[#B7EFCB] flex flex-col md:flex-row items-center">
         
-        {/* Decorative circles */}
-        <div className="absolute -right-[120px] -top-[80px] w-[520px] h-[520px] bg-white rounded-full" />
-        <div className="absolute right-[420px] top-0 w-[70px] h-[70px] bg-white rounded-full" />
-        <div className="absolute right-[440px] bottom-[170px] w-3 h-3 bg-purple-400 rounded-full" />
-        <div className="absolute right-[-50px] top-[100px] w-3 h-3 bg-purple-400 rounded-full" />
-        <div className="absolute right-[-40px] top-[210px] w-5 h-5 bg-white rounded-full" />
+        {/* Dekoratif Daireler (Mobilde karmaşayı önlemek için bazıları gizlenebilir) */}
+        <div className="absolute -right-[120px] -top-[80px] w-[520px] h-[520px] bg-white rounded-full opacity-50 md:opacity-100" />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-[520px] pl-10 md:pl-24">
+        {/* İçerik Alanı */}
+        <div className="relative z-10 max-w-[520px] px-6 py-12 md:pl-24 text-center md:text-left">
           <p className="text-blue-600 text-sm font-bold uppercase tracking-wide mb-6">
             Summer 2020
           </p>
@@ -20,7 +17,7 @@ function HeroSection() {
             NEW COLLECTION
           </h1>
 
-          <p className="text-gray-500 text-lg md:text-xl mb-6 max-w-[380px]">
+          <p className="text-gray-500 text-lg md:text-xl mb-6 max-w-[380px] mx-auto md:mx-0">
             We know how large objects will act, but things on a small scale.
           </p>
 
@@ -29,12 +26,13 @@ function HeroSection() {
           </button>
         </div>
 
-        {/* Image */}
-        <div className="absolute right-0  hidden md:block">
+        {/* Fotoğraf Alanı */}
+        {/* hidden md:block KALDIRILDI, yerine mobil için boyut ayarları eklendi */}
+        <div className="relative md:absolute md:right-0 w-full md:w-auto flex justify-center">
           <img
-            src="https://images.unsplash.com/photo-1621786030484-4c855eed6974?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://images.unsplash.com/photo-1621786030484-4c855eed6974?q=80&w=687&auto=format&fit=crop"
             alt="model"
-            className="w-[500px] object-cover mix-blend-multiply"
+            className="w-[300px] md:w-[500px] object-cover mix-blend-multiply"
           />
         </div>
       </div>
