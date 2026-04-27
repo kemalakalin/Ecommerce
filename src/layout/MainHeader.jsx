@@ -21,7 +21,7 @@ function MainHeader() {
         {/* Menü: Artık 'hidden' değil! Mobilde alt alta, masaüstünde yan yana */}
         <nav className="flex flex-col lg:flex-row items-center gap-6 lg:gap-5 text-xl lg:text-sm font-bold text-[#737373]">
           <Link to="/" className="hover:text-[#23A6F0]">Home</Link>
-          <Link to="/products" className="flex items-center gap-1 hover:text-[#23A6F0]">
+          <Link to="/shop" className="flex items-center gap-1 hover:text-[#23A6F0]">
             Shop <ChevronDown size={14} strokeWidth={2.5} />
           </Link>
           <Link to="/about" className="hover:text-[#23A6F0]">About</Link>

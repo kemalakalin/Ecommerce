@@ -3,7 +3,6 @@ import {
   SiStripe,
   SiReddit,
 } from "react-icons/si";
-
 import { FaAws } from "react-icons/fa";
 
 function BrandLogosSection() {
@@ -27,6 +26,7 @@ function BrandLogosSection() {
 
       </div>
     </section>
+    
   );
 }
 
