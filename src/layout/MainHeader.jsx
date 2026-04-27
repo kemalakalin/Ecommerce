@@ -27,6 +27,7 @@ function MainHeader() {
           <Link to="/about" className="hover:text-[#23A6F0]">About</Link>
           <Link to="/blog" className="hover:text-[#23A6F0]">Blog</Link>
           <Link to="/contact" className="hover:text-[#23A6F0]">Contact</Link>
+          <Link to="/team" className="hover:text-[#23A6F0]">Team</Link>
           <Link to="/pages" className="hover:text-[#23A6F0]">Pages</Link>
         </nav>
       </div>

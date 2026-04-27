@@ -13,6 +13,9 @@ import FeaturedPosts from "./components/FeaturedPosts";
 import Footer from "./components/Footer";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ContactPage from "./pages/ContactPage";
+import TeamPage from "./pages/TeamPage";
+import AboutPage from "./pages/AboutPage";
 
 
 function Home() {
@@ -39,6 +42,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/shop" component={ShopPage} />
         <Route path="/product/:id" component={ProductDetailPage} />
+        <Route path="/contact" component={ContactPage} />
+        <Route path="/team" component={TeamPage} />
+        <Route path="/about" component={AboutPage} />
       </Switch>
 
       <Footer />
