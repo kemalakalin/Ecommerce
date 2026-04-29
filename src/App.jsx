@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { useHistory, Route, Switch } from "react-router-dom";
 
 import TopBar from "./components/TopBar";
 import MainHeader from "./layout/MainHeader";
@@ -16,7 +16,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ContactPage from "./pages/ContactPage";
 import TeamPage from "./pages/TeamPage";
 import AboutPage from "./pages/AboutPage";
-
+import SignupPage from "./pages/SignupPage";
 
 function Home() {
   return (
@@ -45,6 +45,7 @@ function App() {
         <Route path="/contact" component={ContactPage} />
         <Route path="/team" component={TeamPage} />
         <Route path="/about" component={AboutPage} />
+        <Route path="/signup" component={SignupPage} />
       </Switch>
 
       <Footer />

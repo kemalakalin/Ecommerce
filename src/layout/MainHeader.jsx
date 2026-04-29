@@ -36,7 +36,11 @@ function MainHeader() {
       <div className="hidden lg:flex items-center gap-5 text-[#23A6F0] text-sm font-bold">
         <Link to="/login" className="flex items-center gap-1">
           <UserRound size={14} />
-          Login / Register
+          Login 
+        </Link>
+         <Link to="/signup" className="flex items-center gap-1">
+          <UserRound size={14} />
+          Register
         </Link>
         <button type="button"><Search size={18} /></button>
         <Link to="/cart" className="flex items-center gap-1">

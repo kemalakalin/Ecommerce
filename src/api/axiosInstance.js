@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: "https://api.example.com",
+export const api = axios.create({
+  baseURL: "https://workintech-fe-ecommerce.onrender.com",
 });
-
-export default axiosInstance;

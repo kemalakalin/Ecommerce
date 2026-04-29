@@ -69,7 +69,7 @@ function Footer() {
             <input
               type="email"
               placeholder="Your Email"
-              className="border border-[#E6E6E6] px-4 py-2 w-full rounded-l-md outline-none"
+              className="border border-[#E6E6E6] px-4 py-2 rounded-l-md outline-none"
             />
             <button className="bg-[#23A6F0] text-white px-4 py-2 rounded-r-md">
               Subscribe
