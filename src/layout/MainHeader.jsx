@@ -54,24 +54,46 @@ function MainHeader() {
       </div>
 
       {/* Sağ Grup: İkonlar - Sadece Masaüstünde (Görselde istemediğin kısım) */}
-      <div className="hidden lg:flex items-center gap-5 text-[#23A6F0] text-sm font-bold">
-        {user ? (
-          <div className="flex items-center gap-3">
-            <img
-              src={getGravatarUrl(user.email)}
-              alt="User Avatar"
-              className="w-8 h-8 rounded-full"
-            />
-            <span className="text-[#737373]">{user.name}</span>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-1 text-[#23A6F0] hover:text-red-500 transition-colors"
-              title="Logout"
-            >
-              <LogOut size={16} />
-            </button>
-          </div>
-        ) : (
+     <div className="hidden lg:flex items-center gap-5 text-[#23A6F0] text-sm font-bold">
+  {user ? (
+    <div className="flex items-center gap-3">
+      {/* 1. ADIM: BURADAN BAŞLIYOR - Avatar ve Dropdown Menü */}
+      <div className="relative group flex items-center gap-2 cursor-pointer py-2">
+        <img
+          src={getGravatarUrl(user.email)}
+          alt="User Avatar"
+          className="w-8 h-8 rounded-full border border-gray-200"
+        />
+        <div className="flex items-center gap-1">
+          <span className="text-[#737373] font-bold">{user.name}</span>
+          <ChevronDown size={14} className="text-[#737373] group-hover:rotate-180 transition-transform" />
+        </div>
+
+        {/* Dropdown Linkleri: Hover durumunda görünür */}
+        <div className="absolute top-full right-0 mt-1 w-48 bg-white border border-gray-100 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[100]">
+          <ul className="py-2">
+            <li>
+              <Link 
+                to="/previous-orders" 
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#23A6F0] transition-colors"
+              >
+                My Previous Orders
+              </Link>
+            </li>
+            <li className="border-t border-gray-50 mt-1">
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 flex items-center gap-2 transition-colors"
+              >
+                <LogOut size={14} /> Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* BURADA BİTİYOR */}
+  </div>
+) : (
           <>
             <Link to="/login" className="flex items-center gap-1">
               <UserRound size={14} />

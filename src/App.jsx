@@ -1,5 +1,4 @@
-import React from "react";
-import { useHistory, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import TopBar from "./components/TopBar";
 import MainHeader from "./layout/MainHeader";
@@ -19,9 +18,10 @@ import AboutPage from "./pages/AboutPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage";
+import CreateOrderPage from "./pages/CreateOrderPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import useAutoLogin from "./store/hooks/useAutoLogin";
-
+import PreviousOrdersPage from './pages/PreviousOrdersPage';
 
 function Home() {
   return (
@@ -54,6 +54,8 @@ function App() {
         <Route path="/signup" component={SignupPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/cart" component={ShoppingCartPage} />
+        <ProtectedRoute path="/order" component={CreateOrderPage} />
+        <ProtectedRoute path="/previous-orders" component={PreviousOrdersPage} />
       </Switch>
 
       <Footer />

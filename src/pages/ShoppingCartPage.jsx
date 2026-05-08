@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Trash2, Plus, Minus, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { 
   removeFromCart, 
   updateCartItemCount, 
@@ -10,6 +10,7 @@ import {
 
 function ShoppingCartPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const cart = useSelector(state => state.shoppingCart.cart);
 
   const handleIncrement = (id, count) => {
@@ -30,6 +31,10 @@ function ShoppingCartPage() {
 
   const handleToggleCheck = (id) => {
     dispatch(toggleCartItemChecked(id));
+  };
+
+  const handleCreateOrder = () => {
+    history.push("/order");
   };
 
   const productsTotal = cart
@@ -150,6 +155,7 @@ function ShoppingCartPage() {
               )}
               
               <button 
+                onClick={handleCreateOrder}
                 disabled={selectedCount === 0}
                 className="w-full py-3 bg-[#23A6F0] text-white font-bold rounded-md hover:bg-blue-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
