@@ -1,13 +1,29 @@
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Search,
   ShoppingCart,
   Heart,
   UserRound,
   ChevronDown,
+  LogOut,
 } from "lucide-react";
+import MD5 from "crypto-js/md5";
+import { logoutUser } from "../store/actions/authActions";
 
 function MainHeader() {
+  const user = useSelector((state) => state.client.user);
+  const dispatch = useDispatch();
+
+  const getGravatarUrl = (email) => {
+    const hash = MD5(email.toLowerCase()).toString();
+    return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=32`;
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <header className="bg-white px-4 py-6 sm:px-6 md:px-9 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
       
@@ -34,14 +50,34 @@ function MainHeader() {
 
       {/* Sağ Grup: İkonlar - Sadece Masaüstünde (Görselde istemediğin kısım) */}
       <div className="hidden lg:flex items-center gap-5 text-[#23A6F0] text-sm font-bold">
-        <Link to="/login" className="flex items-center gap-1">
-          <UserRound size={14} />
-          Login 
-        </Link>
-         <Link to="/signup" className="flex items-center gap-1">
-          <UserRound size={14} />
-          Register
-        </Link>
+        {user ? (
+          <div className="flex items-center gap-3">
+            <img
+              src={getGravatarUrl(user.email)}
+              alt="User Avatar"
+              className="w-8 h-8 rounded-full"
+            />
+            <span className="text-[#737373]">{user.name}</span>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1 text-[#23A6F0] hover:text-red-500 transition-colors"
+              title="Logout"
+            >
+              <LogOut size={16} />
+            </button>
+          </div>
+        ) : (
+          <>
+            <Link to="/login" className="flex items-center gap-1">
+              <UserRound size={14} />
+              Login 
+            </Link>
+            <Link to="/signup" className="flex items-center gap-1">
+              <UserRound size={14} />
+              Register
+            </Link>
+          </>
+        )}
         <button type="button"><Search size={18} /></button>
         <Link to="/cart" className="flex items-center gap-1">
           <ShoppingCart size={17} />

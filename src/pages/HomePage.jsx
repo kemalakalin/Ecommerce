@@ -1,4 +1,19 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { UserRound, Search, ShoppingCart, Heart, ChevronDown } from "lucide-react";
+import md5 from "crypto-js/md5";
+
+function BandageHero() {
+  const user = useSelector((state) => state.client.user);
+
+  const avatarUrl = user
+    ? `https://www.gravatar.com/avatar/${md5(
+        user.email.trim().toLowerCase()
+      ).toString()}`
+    : null;
+
+  return (
+    <div className="w-full">
 
       {/* Navbar */}
       <header className="h-[80px] md:h-[90px] flex items-center justify-between px-6 md:px-9">
@@ -17,15 +32,34 @@ import React from "react";
           </nav>
         </div>
 
+        {/* RIGHT SIDE */}
         <div className="flex items-center gap-4 md:gap-6 text-[#23A6F0] text-sm font-bold">
-          <a href="#" className="hidden sm:flex items-center gap-1">
-            <UserRound size={16} /> Login / Register
-          </a>
+
+          {/* USER AREA (IMPORTANT FIX) */}
+          {user ? (
+            <div className="flex items-center gap-2">
+              <img
+                src={avatarUrl}
+                alt="avatar"
+                className="w-8 h-8 rounded-full"
+              />
+              <span className="hidden sm:block text-black">
+                {user.name}
+              </span>
+            </div>
+          ) : (
+            <a href="#" className="hidden sm:flex items-center gap-1">
+              <UserRound size={16} /> Login / Register
+            </a>
+          )}
+
           <Search size={20} />
+
           <div className="flex items-center gap-1">
             <ShoppingCart size={18} />
             <span className="text-xs">1</span>
           </div>
+
           <div className="flex items-center gap-1">
             <Heart size={18} />
             <span className="text-xs">1</span>
@@ -33,9 +67,10 @@ import React from "react";
         </div>
       </header>
 
-      {/* Hero */}
+      {/* HERO */}
       <main className="px-4 md:px-12">
         <section className="relative overflow-hidden rounded-2xl min-h-[500px] md:min-h-[535px] bg-gradient-to-r from-[#8BDEEF] to-[#B7EFCB]">
+
           {/* Decorative */}
           <div className="absolute -right-[110px] -top-[70px] w-[530px] h-[530px] bg-white rounded-full" />
           <div className="absolute right-[350px] md:right-[415px] top-0 w-[60px] md:w-[69px] h-[60px] md:h-[69px] bg-white rounded-full" />
@@ -49,20 +84,20 @@ import React from "react";
               Summer 2020
             </p>
 
-            <h2 className="text-3xl md:text-[52px] font-extrabold leading-tight tracking-wide mb-5 md:mb-7">
+            <h2 className="text-3xl md:text-[52px] font-extrabold leading-tight mb-5 md:mb-7">
               NEW COLLECTION
             </h2>
 
-            <p className="text-[#737373] text-base md:text-xl font-medium leading-6 md:leading-8 max-w-[380px] mb-6 md:mb-7">
+            <p className="text-[#737373] text-base md:text-xl mb-6 md:mb-7">
               We know how large objects will act, but things on a small scale.
             </p>
 
-            <button className="bg-[#23A6F0] hover:bg-[#1687c7] text-white text-lg md:text-[22px] font-bold px-6 md:px-[35px] py-3 md:py-[14px] rounded">
+            <button className="bg-[#23A6F0] hover:bg-[#1687c7] text-white font-bold px-6 py-3 rounded">
               SHOP NOW
             </button>
           </div>
 
-          {/* Image */}
+          {/* IMAGE */}
           <div className="hidden md:block absolute right-[40px] bottom-0 z-10 w-[450px] lg:w-[520px]">
             <img
               src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop"
