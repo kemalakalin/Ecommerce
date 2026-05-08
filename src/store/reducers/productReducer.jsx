@@ -8,6 +8,8 @@ const initialState = {
   category: null,
   sort: "",
   fetchState: "NOT_FETCHED",
+  product: null,
+  productFetchState: "NOT_FETCHED",
 };
 
 export const SET_CATEGORIES = "SET_CATEGORIES";
@@ -19,6 +21,8 @@ export const SET_OFFSET = "SET_OFFSET";
 export const SET_FILTER = "SET_FILTER";
 export const SET_CATEGORY = "SET_CATEGORY";
 export const SET_SORT = "SET_SORT";
+export const SET_PRODUCT = "SET_PRODUCT";
+export const SET_PRODUCT_FETCH_STATE = "SET_PRODUCT_FETCH_STATE";
 
 export default function productReducer(state = initialState, action) {
   switch (action.type) {
@@ -48,6 +52,12 @@ export default function productReducer(state = initialState, action) {
 
     case SET_SORT:
       return { ...state, sort: action.payload };
+      
+    case SET_PRODUCT:
+      return { ...state, product: action.payload };
+      
+    case SET_PRODUCT_FETCH_STATE:
+      return { ...state, productFetchState: action.payload };
 
     default:
       return state;

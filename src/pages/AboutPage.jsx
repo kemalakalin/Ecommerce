@@ -163,9 +163,8 @@ function AboutPage() {
         role: "Developer",
         image: "https://picsum.photos/500/360?random=33",
       },
-    ].map((member) => (
-      <div key={member.name} className="text-center">
-        <div className="h-[260px] overflow-hidden bg-[#F5F5F5]">
+    ].map((member, index) => (
+      <div key={index} className="text-center">        <div className="h-[260px] overflow-hidden bg-[#F5F5F5]">
           <img
             src={member.image}
             alt={member.name}

@@ -3,31 +3,53 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronRight, Grid, List } from "lucide-react";
 import BrandLogosSection from "../components/BrandLogosSection";
-import { fetchProducts, setCategory, setSort, setFilter } from "../store/actions/productActions";
+import ProductCard from "../components/ProductCard";
+import { fetchProducts, setCategory, setSort, setFilter, setOffset } from "../store/actions/productActions";
+import ReactPaginate from 'react-paginate';
 
 function ShopPage() {
   const dispatch = useDispatch();
   const { gender, categoryName, categoryId } = useParams();
-  const { productList, total, fetchState, category, sort, filter } = useSelector(state => state.product);
+  const { productList, total, fetchState, category, sort, filter, limit, offset } = useSelector(state => state.product);
 
   // Handle category from URL params
   useEffect(() => {
     if (categoryId) {
       dispatch(setCategory(categoryId));
+      dispatch(setOffset(0));
     }
   }, [categoryId, dispatch]);
 
-  // Fetch products when category, sort, or filter changes
+  // Fetch products when category, sort, filter, or offset changes
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [category, sort, filter, dispatch]);
+  }, [category, sort, filter, offset, dispatch]);
 
   const handleSortChange = (e) => {
     dispatch(setSort(e.target.value));
+    dispatch(setOffset(0));
   };
 
   const handleFilterChange = (e) => {
     dispatch(setFilter(e.target.value));
+    dispatch(setOffset(0));
+  };
+
+  const handlePageClick = (event) => {
+    const newOffset = event.selected * limit;
+    dispatch(setOffset(newOffset));
+  };
+
+  const pageCount = Math.ceil(total / limit) || 1;
+
+  // Fix for Vite CJS/ESM interop issue with react-paginate
+  const PaginateComponent = ReactPaginate && ReactPaginate.default ? ReactPaginate.default : ReactPaginate;
+
+  const createSlug = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
   };
 
   return (
@@ -114,59 +136,36 @@ function ShopPage() {
             </div>
           ) : (
             productList.map((product) => (
-              <Link
+              <ProductCard
                 key={product.id}
-                to={`/product/${product.id}`}
-                className="block text-center"
-              >
-                <div className="h-[300px] overflow-hidden bg-gray-100">
-                  <img
-                    src={product.images?.[0]?.url || "https://picsum.photos/500/600?random=1"}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <h3 className="mt-4 font-bold">{product.name}</h3>
-                <p className="text-sm text-gray-500">
-                  {product.description?.substring(0, 50)}...
-                </p>
-
-                <div className="flex justify-center gap-2 mt-2">
-                  <span className="text-green-600 font-bold">
-                    ${product.price}
-                  </span>
-                </div>
-              </Link>
+                product={product}
+                gender={gender}
+                categoryName={categoryName}
+                categoryId={categoryId}
+              />
             ))
           )}
         </div>
 
     {/* PAGINATION */}
 <div className="flex justify-center mt-16">
-  <div className="flex border border-[#E9E9E9] rounded-lg overflow-hidden shadow-sm">
-    
-    <button className="px-6 py-4 bg-[#F3F3F3] text-[#BDBDBD] text-sm font-bold border-r border-[#E9E9E9]">
-      First
-    </button>
-
-    <button className="px-5 py-4 bg-white text-[#23A6F0] text-sm font-bold border-r border-[#E9E9E9]">
-      1
-    </button>
-
-    <button className="px-5 py-4 bg-[#23A6F0] text-white text-sm font-bold border-r border-[#E9E9E9]">
-      2
-    </button>
-
-    <button className="px-5 py-4 bg-white text-[#23A6F0] text-sm font-bold border-r border-[#E9E9E9]">
-      3
-    </button>
-
-    <button className="px-6 py-4 bg-white text-[#23A6F0] text-sm font-bold">
-      Next
-    </button>
-
-  </div>
+  <PaginateComponent
+    breakLabel="..."
+    nextLabel="Next"
+    onPageChange={handlePageClick}
+    pageRangeDisplayed={3}
+    pageCount={pageCount}
+    forcePage={limit > 0 ? Math.floor(offset / limit) : 0}
+    previousLabel="First"
+    renderOnZeroPageCount={null}
+    containerClassName="flex border border-[#E9E9E9] rounded-lg overflow-hidden shadow-sm list-none p-0 m-0"
+    pageLinkClassName="flex px-5 py-4 bg-white text-[#23A6F0] text-sm font-bold border-r border-[#E9E9E9] hover:bg-gray-50 cursor-pointer"
+    activeLinkClassName="!bg-[#23A6F0] !text-white"
+    previousLinkClassName="flex px-6 py-4 bg-white text-[#23A6F0] text-sm font-bold border-r border-[#E9E9E9] hover:bg-gray-50 cursor-pointer"
+    nextLinkClassName="flex px-6 py-4 bg-white text-[#23A6F0] text-sm font-bold hover:bg-gray-50 cursor-pointer"
+    breakLinkClassName="flex px-5 py-4 bg-white text-[#23A6F0] text-sm font-bold border-r border-[#E9E9E9]"
+    disabledClassName="opacity-50 cursor-not-allowed pointer-events-none bg-[#F3F3F3]"
+  />
 </div>
 
         <BrandLogosSection />

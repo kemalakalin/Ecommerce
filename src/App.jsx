@@ -18,6 +18,7 @@ import TeamPage from "./pages/TeamPage";
 import AboutPage from "./pages/AboutPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import useAutoLogin from "./store/hooks/useAutoLogin";
 
@@ -45,13 +46,14 @@ function App() {
 
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId" component={ProductDetailPage} />
         <Route path="/shop/:gender?/:categoryName?/:categoryId?" component={ShopPage} />
-        <Route path="/product/:id" component={ProductDetailPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/team" component={TeamPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/signup" component={SignupPage} />
-         <Route path="/login" component={LoginPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/cart" component={ShoppingCartPage} />
       </Switch>
 
       <Footer />

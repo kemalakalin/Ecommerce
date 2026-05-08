@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -13,7 +14,9 @@ import { logoutUser } from "../store/actions/authActions";
 
 function MainHeader() {
   const user = useSelector((state) => state.client.user);
+  const cart = useSelector((state) => state.shoppingCart.cart);
   const dispatch = useDispatch();
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const getGravatarUrl = (email) => {
     const hash = MD5(email.toLowerCase()).toString();
@@ -24,8 +27,10 @@ function MainHeader() {
     dispatch(logoutUser());
   };
 
+  const cartItemCount = cart.reduce((total, item) => total + item.count, 0);
+
   return (
-    <header className="bg-white px-4 py-6 sm:px-6 md:px-9 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+    <header className="bg-white px-4 py-6 sm:px-6 md:px-9 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 relative z-50">
       
       {/* Sol Grup: Logo ve Menü */}
       <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-24">
@@ -79,10 +84,49 @@ function MainHeader() {
           </>
         )}
         <button type="button"><Search size={18} /></button>
-        <Link to="/cart" className="flex items-center gap-1">
-          <ShoppingCart size={17} />
-          <span className="text-xs">1</span>
-        </Link>
+        
+        {/* Shopping Cart Dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setIsCartOpen(!isCartOpen)}
+            className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+          >
+            <ShoppingCart size={17} />
+            <span className="text-xs">{cartItemCount}</span>
+          </button>
+          
+          {isCartOpen && (
+            <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
+              <h3 className="font-bold text-gray-800 mb-3 border-b pb-2">My Cart ({cartItemCount} Items)</h3>
+              {cart.length === 0 ? (
+                <p className="text-sm text-gray-500">Your cart is empty.</p>
+              ) : (
+                <div className="flex flex-col gap-4 max-h-80 overflow-y-auto">
+                  {cart.map((item, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <img src={item.product.images?.[0]?.url || "https://picsum.photos/50/50?random=" + index} alt={item.product.name} className="w-12 h-12 object-cover rounded" />
+                      <div className="flex-1">
+                        <h4 className="text-sm font-bold text-gray-800 line-clamp-1">{item.product.name}</h4>
+                        <p className="text-xs text-gray-500">Qty: {item.count}</p>
+                      </div>
+                      <div className="text-sm font-bold text-[#23A6F0]">
+                        ${(item.product.price * item.count).toFixed(2)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {cart.length > 0 && (
+                <div className="mt-4 pt-3 border-t flex justify-between items-center">
+                  <Link to="/cart" onClick={() => setIsCartOpen(false)} className="text-sm font-bold text-white bg-[#23A6F0] px-4 py-2 rounded hover:bg-blue-600 w-full text-center">
+                    Go to Checkout
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         <Link to="/wishlist" className="flex items-center gap-1">
           <Heart size={17} />
           <span className="text-xs">1</span>
@@ -93,7 +137,10 @@ function MainHeader() {
           istemiyorsan bu div'i tamamen silebilirsin. */}
       <div className="flex lg:hidden items-center justify-center gap-6 text-[#23A6F0]">
          <Search size={24} />
-         <ShoppingCart size={24} />
+         <button onClick={() => setIsCartOpen(!isCartOpen)} className="relative">
+           <ShoppingCart size={24} />
+           <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">{cartItemCount}</span>
+         </button>
       </div>
     </header>
   );

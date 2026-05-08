@@ -47,8 +47,8 @@ function TeamPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-          {teamMembers.map((member) => (
-            <div key={member.name} className="text-center bg-white">
+          {teamMembers.map((member, index) => (
+            <div key={index} className="text-center bg-white">
               <div className="h-[320px] overflow-hidden bg-[#F5F5F5]">
                 <img
                   src={member.image}
